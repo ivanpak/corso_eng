@@ -32,30 +32,22 @@ un determinato colore.
 E necessario usare minimo cicli, condizioni, metodi e ArrayList o matrici per
 implementare il sistema. */
 
-/*
- * Responsabilità:
- * 
- * aggiunta spedizione
- * visualizzazione spedizioni
- * calcolo totale
- * ricerca per colore
- * 
- * 
- */
-
 public class Main {
     
     static final String[] types = new String [] {"rosso", "blu", "verde", "nero"};
-    static Scanner stringScanner = new Scanner(System.in);
-    static Scanner intScanner = new Scanner(System.in);
+
+    // metto gli scanner statici in modo tale da non avere uno scanner per ogni metodo, il che crea problemi perchè si rubano cose dal buffer di input
+    static Scanner stringScanner;
+    static Scanner intScanner;
+    
+    static int currentDayId = 0;
 
     public static void main(String[] args) {
 
-        // lunghezza massima visualizzazione nome
-        int stringCutLength = 4;
-
         // Liste prenotazioni
         ArrayList<ArrayList<Integer>> spedizioni = new ArrayList<>();
+        ArrayList<Integer> dayIds = new ArrayList<>(); // 1731970800
+
         generaSpedizioni(spedizioni);
 
         // Inizializzazione scanner
@@ -66,7 +58,7 @@ public class Main {
         // Loop del menu
         loop1: while(true) {
             System.out.println("\n------------MENU----------------");
-            System.out.println("Inserisci stringa: inserisci, visualizza, report, cerca o chiudi?");
+            System.out.println("Inserisci stringa: inserisci, visualizza, report, cerca, spedizioni o chiudi?");
             String selector = stringScanner.nextLine();
             
             // seleziona l'operazione da eseguire
@@ -77,7 +69,16 @@ public class Main {
                 case "inserisci":
                     Main.inserimentoSpedizione(spedizioni);
                     break;
+
+                case "generaSpedizioni":
+                    Main.generaSpedizioni(spedizioni);
+                    break;
+
+                case "spedisci":
+                    break;
                 
+                case "nuovo giorno":
+                    break;
 
                 // cerca una spedizione
                 case "cerca":
@@ -197,7 +198,7 @@ public class Main {
 
 
 
-    
+
     // questa funzione restituisce l'indice della prima spedizione con almeno una penna del colore specificato
     public static int cercaPosizione(ArrayList<ArrayList<Integer>> l1, String color) {
         int ind1 = -1;
