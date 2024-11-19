@@ -100,6 +100,7 @@ public class Main {
                 // esci dal menu
                 case "chiudi":
                     System.out.println("arrivederci");
+                    // qui nel break specifico che non voglio chiudere lo switch ma il loop del menu
                     break loop1;
                 
                 default:
@@ -152,7 +153,7 @@ public class Main {
     public static void sommaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
 
         // somma per ogni colore e totale
-        int[] sums = new int[4];
+        int[] sums = new int[Main.types.length];
         int fullsum = 0;
         for (ArrayList<Integer> sped : speds) {
             for (int i=0; i<4; i++) {
@@ -215,6 +216,7 @@ public class Main {
         System.out.print("\n");
     }
 
+    // genero le spedizioni
     public static void generaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
         for(int i =0; i<10; i++) {
             ArrayList<Integer> sped1 = generaSpedizione();
@@ -223,10 +225,12 @@ public class Main {
         }
     }
 
+    // genera e restituisci una singola spedizione
     public static ArrayList<Integer> generaSpedizione() {
         int sum=0;
         ArrayList<Integer> sped = new ArrayList<>();
         Random rand = new Random();
+        // genero spedizioni in loop e restituisco solo quando ne ottengo una con almeno una penna in totale
         while(sum==0) {
             sped.clear();
             for (int i=0; i<Main.types.length; i++) {
