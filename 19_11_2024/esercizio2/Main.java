@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -10,10 +11,20 @@ Per ogni numero, usa un switch per determinare il giorno della settimana (ad ese
 Stampa il giorno della settimana corrispondente.
  */
 
+// Nota: ho usato alcuni caratteri rappresentati in codice unicode e.g. \u00EC.
+// Questo perchè scrivendoli normalmente dava errore, credo perchè l'encoding usato nell'IDE e nell'output è diverso. Penso unicode e ascii respectively.
+
 public class Main {
     public static void main(String[] args) {
+        // int[] nums = {1,2,3};
+        // int[] nums = new int[5];
+        // System.out.println(Arrays.toString(nums));
 
+        
+        // Itero sui numeri da 1 a 7
         for (int i =1; i<=7 ; i++) {
+
+            // Assegno il nome del giorno
             String nomeGiorno = "";
             switch (i) {
                 case 1:
@@ -41,6 +52,7 @@ public class Main {
                     break;
             }
 
+            // Costruisco la stringa di output
             String out1 = String.format("Il %d\u00B0 giorno della settimana \u00E8 %s", i, nomeGiorno);
             System.out.println(out1);
         } 
