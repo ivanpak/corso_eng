@@ -1,30 +1,38 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
-Scrivi un programma che continua a chiedere all'utente di inserire un numero fino a quando l'utente inserisce un numero negativo. Durante ogni iterazione, controlla con un if se il numero è pari o dispari e stampalo.
+/*Utilizzare un ArrayList per memorizzare le prenotazioni, dove
+ogni prenotazione è rappresentata da almeno:
+
+Nome del cliente.
+Riga e colonna del posto prenotato.
 
 
+Il sistema deve fornire le stesse funzionalità:
 
-Chiedi all'utente di inserire un numero.
-Continua a chiedere il numero finché l'utente non inserisce un numero negativo.
-Usa if per verificare se il numero è pari o dispari.
-Stampa il risultato.
- */
+Prenotare un posto specifico ( 3 file da 8 posti).
+Cercare prenotazioni per nome / attributo.
+Visualizzare tutti i posti disponibili e prenotati.
+Creare un report abbinando i posti totali ai posti prenotati.
+Poter Chiudere il ciclo. */
 
 public class Main {
     
     public static void main(String[] args) {
 
-        int roomsize1 = 3;
-        int roomsize2 = 8;
+        // dimensioni stanza
+        final int roomsize1 = 3;
+        final int roomsize2 = 8;
 
+        // lunghezza massima visualizzazione nome
         int stringCutLength = 4;
 
+        // Liste prenotazioni
         ArrayList<String> prenotationNames = new ArrayList<>();
         ArrayList<Integer> prenotationNumbers1 = new ArrayList<>();
         ArrayList<Integer> prenotationNumbers2 = new ArrayList<>();
 
+        // Inizializzazione scanner
         Scanner stringScanner = new Scanner(System.in);
         Scanner intScanner = new Scanner(System.in);
         
@@ -38,6 +46,7 @@ public class Main {
             // seleziona l'operazione da eseguire
             switch (selector) {
 
+
                 // prenotazione
                 case "prenota":
                     System.out.println("----");
@@ -47,6 +56,11 @@ public class Main {
                     int rowNum = intScanner.nextInt();
                     System.out.println("inerisci posizione nella fila");
                     int colNum = intScanner.nextInt();
+
+                    if(rowNum>=roomsize1 || colNum>=roomsize2) {
+                        System.out.println("Posto non esistente");
+                        break;
+                    }
 
                     // se la posizione non è occupata
                     if(!prenotationNumbers1.contains(rowNum) || !prenotationNumbers2.contains(colNum)) {
@@ -78,6 +92,7 @@ public class Main {
                     }
                     break;
                 
+
                 // cerca una prenotazione
                 case "cerca":
                     System.out.println("Inserisci stringa: nome o posizione?");
@@ -113,6 +128,12 @@ public class Main {
                             int filaCercata = intScanner.nextInt();
                             System.out.println("inerisci numero nella fila");
                             int posizioneCercata = intScanner.nextInt();
+
+                            if(filaCercata>=roomsize1 || posizioneCercata>=roomsize2) {
+                                System.out.println("Posto non esistente");
+                                break;
+                            }
+
                             int ind1 = searchPosition(prenotationNumbers1, prenotationNumbers2, filaCercata, posizioneCercata);
                             if(ind1==-1) {
                                 System.out.println("nessuna prenotazione qui");
@@ -124,6 +145,7 @@ public class Main {
                             break;
                     }
                     break;
+
 
                 // visualizza la stanza con tutte le postazioni, indicando per ognuna se è occupata e da chi
                 case "visualizza":
@@ -156,11 +178,13 @@ public class Main {
                     }
                     break;
 
+
                 // mostro il numero e la percentuale di postazioni occupate
                 case "report":
-                    System.out.println(String.format("%d posti occupati su %s (%.1f)%%", prenotationNames.size(), roomsize1*roomsize2, (100*(float)prenotationNames.size())/((float)(roomsize1*roomsize2))));
+                    System.out.println(String.format("%d posti occupati e %d liberi su %s (occupazione %.1f%%)", prenotationNames.size(), roomsize1*roomsize2-prenotationNames.size(), roomsize1*roomsize2, (100*(float)prenotationNames.size())/((float)(roomsize1*roomsize2))));
                     break;
                 
+
                 // esci dal menu
                 case "chiudi":
                     System.out.println("arrivederci");
