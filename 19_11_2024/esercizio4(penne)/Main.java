@@ -113,6 +113,7 @@ public class Main {
         Main.intScanner.close();
     }
 
+    // funzione di interfaccia utente per inserire una spedizione
     public static void inserimentoSpedizione(ArrayList<ArrayList<Integer>> speds) {
 
         // inserimento quantità
@@ -134,6 +135,7 @@ public class Main {
         System.out.println("spedizione inserita");
     }
 
+    // funzione di interfaccia utente per visualizzare le spedizioni
     public static void visualizzaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
 
         // stampa dell'intestazione della tabella
@@ -150,6 +152,7 @@ public class Main {
         }
     }
 
+    // funzione di interfaccia utente per mostrare la somma delle quantità delle spedizioni
     public static void sommaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
 
         // somma per ogni colore e totale
@@ -169,6 +172,7 @@ public class Main {
         }
     }
 
+    // funzione di interfaccia utente per cercare una spedizione
     public static void cercaSpedizione(ArrayList<ArrayList<Integer>> speds) {
 
         // inserimento colore cercato
@@ -190,6 +194,10 @@ public class Main {
         }
     }
 
+
+
+
+    
     // questa funzione restituisce l'indice della prima spedizione con almeno una penna del colore specificato
     public static int cercaPosizione(ArrayList<ArrayList<Integer>> l1, String color) {
         int ind1 = -1;
