@@ -27,7 +27,7 @@ public class Main {
         int roomsize1 = 3;
         int roomsize2 = 8;
 
-        int stringCutLength = 5;
+        int stringCutLength = 4;
 
         ArrayList<String> prenotationNames = new ArrayList<>();
         ArrayList<Integer> prenotationNumbers1 = new ArrayList<>();
@@ -38,17 +38,17 @@ public class Main {
 
         
 
-        while(true) {
-            System.out.println("opzioni");
+        loop: while(true) {
+            System.out.println("prenota, cerca, visualizza, report o chiudi?");
             String selector = stringScanner.nextLine();
             switch (selector) {
                 case "prenota":
                     System.out.println("----");
                     System.out.println("inerisci nome");
                     String name = stringScanner.nextLine();
-                    System.out.println("inerisci nome");
+                    System.out.println("inerisci fila");
                     int rowNum = intScanner.nextInt();
-                    System.out.println("inerisci nome");
+                    System.out.println("inerisci posizione nella fila");
                     int colNum = intScanner.nextInt();
 
                     if(!prenotationNumbers1.contains(rowNum) || !prenotationNumbers2.contains(colNum)) {
@@ -62,7 +62,7 @@ public class Main {
                     break;
                 
                 case "cerca":
-                    System.out.println("opzioni");
+                    System.out.println("nome o posizione?");
                     String selector2 = stringScanner.nextLine();
                     switch (selector2) {
                         case "nome":
@@ -98,14 +98,24 @@ public class Main {
                     }
 
                     for (int i=0; i<roomsize1; i++) {
-                        for (int j=0; j<roomsize1; j++) {
-
-                            System.out.print(arr1[i][j].substring(0,5) + '\t');
+                        for (int j=0; j<roomsize2; j++) {
+                            String s1 = arr1[i][j]==null ? "x" : arr1[i][j];
+                            String subString = (s1.length()>stringCutLength) ? s1.substring(0,stringCutLength) + "..." : s1;
+                            System.out.print(subString + '\t');
                         }
                         System.out.print('\n');
                     }
                     break;
+
+                case "report":
+                    System.out.println(String.format("%d posti occupati su %s (%.1f)%%", prenotationNames.size(), roomsize1*roomsize2, ((float)prenotationNames.size())/((float)(roomsize1*roomsize2))));
+                    break;
+                
+                case "chiudi":
+                    System.out.println("arrivederci");
+                    break loop;
                 default:
+                    System.out.println("comando non supportato");
                     break;
             }
         }
