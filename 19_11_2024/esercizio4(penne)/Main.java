@@ -1,6 +1,8 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /*Una ditta di spedizioni vuole gestire le spedizioni di penne. 
@@ -54,6 +56,7 @@ public class Main {
 
         // Liste prenotazioni
         ArrayList<ArrayList<Integer>> spedizioni = new ArrayList<>();
+        generaSpedizioni(spedizioni);
 
         // Inizializzazione scanner
         stringScanner = new Scanner(System.in);
@@ -211,5 +214,33 @@ public class Main {
         }
         System.out.print("\n");
     }
+
+    public static void generaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
+        for(int i =0; i<10; i++) {
+            ArrayList<Integer> sped1 = generaSpedizione();
+            stampaSpedizione(sped1);
+            speds.add(sped1);
+        }
+    }
+
+    public static ArrayList<Integer> generaSpedizione() {
+        int sum=0;
+        ArrayList<Integer> sped = new ArrayList<>();
+        Random rand = new Random();
+        while(sum==0) {
+            sped.clear();
+            for (int i=0; i<Main.types.length; i++) {
+                sped.add(rand.nextInt(100));
+            }
+            sum = 0;
+            for (Integer s: sped) {
+                sum += s;
+            }
+        }
+
+        return sped;
+    }
+
+
 }
 
