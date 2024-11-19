@@ -31,7 +31,7 @@ public class Main {
 
         // Loop del menu
         loop1: while(true) {
-            System.out.println("------------MENU----------------");
+            System.out.println("\n------------MENU----------------");
             System.out.println("Inserisci stringa: prenota, cerca, visualizza, report o chiudi?");
             String selector = stringScanner.nextLine();
             
@@ -64,12 +64,7 @@ public class Main {
 
                             //trovo l'indice della prenotazione e sovrascrivo le coordinate
                             case "yes":
-                                int ind1 = 0;
-                                for(int i=0; i<prenotationNames.size(); i++) {
-                                    if(prenotationNumbers1.get(i) == rowNum && prenotationNumbers2.get(i) == colNum) {
-                                        ind1 = i;
-                                    }
-                                }
+                                int ind1 = searchPosition(prenotationNumbers1, prenotationNumbers2, rowNum, colNum);
                                 prenotationNames.set(ind1, name);
                                 break;
                             
@@ -95,10 +90,18 @@ public class Main {
                         case "nome":
                             System.out.println("inerisci nome");
                             String nameCercato = stringScanner.nextLine();
-                            
+                            ArrayList<Integer> positions = new ArrayList<>();
                             for(int i=0; i<prenotationNames.size(); i++) {
                                 System.out.println(prenotationNames.get(i));
                                 if(prenotationNames.get(i).equals(nameCercato)) {
+                                    positions.add(i);
+                                }
+                            }
+
+                            if(positions.size() == 0) {
+                                System.out.println("nessuna prenotazione per questo utente");
+                            } else {
+                                for (int i: positions) {
                                     System.out.println(String.format("Nome: %s fila: %d numero: %d", prenotationNames.get(i), prenotationNumbers1.get(i), prenotationNumbers2.get(i)));
                                 }
                             }
@@ -110,10 +113,11 @@ public class Main {
                             int filaCercata = intScanner.nextInt();
                             System.out.println("inerisci numero nella fila");
                             int posizioneCercata = intScanner.nextInt();
-                            for(int i=0; i<prenotationNames.size(); i++) {
-                                if(prenotationNumbers1.get(i) == filaCercata && prenotationNumbers2.get(i) == posizioneCercata) {
-                                    System.out.println(String.format("Nome: %s fila: %d numero: %d", prenotationNames.get(i), prenotationNumbers1.get(i), prenotationNumbers2.get(i)));
-                                }
+                            int ind1 = searchPosition(prenotationNumbers1, prenotationNumbers2, filaCercata, posizioneCercata);
+                            if(ind1==-1) {
+                                System.out.println("nessuna prenotazione qui");
+                            } else {
+                                System.out.println(String.format("Nome: %s fila: %d numero: %d", prenotationNames.get(ind1), prenotationNumbers1.get(ind1), prenotationNumbers2.get(ind1)));
                             }
                             break;
                         default:
@@ -124,16 +128,27 @@ public class Main {
                 // visualizza la stanza con tutte le postazioni, indicando per ognuna se è occupata e da chi
                 case "visualizza":
 
-                    // converto la lista (liste) di prenotazioni unidimensionale in una matrice
+                    // converto la lista (3 liste) di prenotazioni unidimensionale in una matrice
                     String[][] arr1 = new String[roomsize1][roomsize2];
                     for (int i=0; i<prenotationNames.size(); i++) {
                         arr1[prenotationNumbers1.get(i)][prenotationNumbers2.get(i)] = prenotationNames.get(i);
                     }
 
-                    // visualizzo la matrice
-                    for (int i=0; i<roomsize1; i++) {
-                        for (int j=0; j<roomsize2; j++) {
-                            String s1 = arr1[i][j]==null ? "x" : arr1[i][j];
+                    // visualizzo la matrice. Gli indici partono da -1 per aggiungere numeri di riga e colonna
+                    for (int i=-1; i<roomsize1; i++) {
+                        for (int j=-1; j<roomsize2; j++) {
+                            String s1 = "";
+                            if(i==-1 && j==-1) {
+                                s1 = "";
+                            }
+                            else if(i==-1) {
+                                s1 = "" + j;
+                            } else if(j==-1) {
+                                s1 = "" + i;
+                            } else {
+                                s1 = arr1[i][j]==null ? "x" : arr1[i][j];
+                            }
+                            // per evitare di rovinare
                             String subString = (s1.length()>stringCutLength) ? s1.substring(0,stringCutLength) + "..." : s1;
                             System.out.print(subString + '\t');
                         }
@@ -156,6 +171,22 @@ public class Main {
                     break;
             }
         }
+
+        stringScanner.close();
+        intScanner.close();
     }
+
+    // questa funzione restituisce il primo indice delle liste l1 e l2 al quale si trovano i due valori value1 e value2
+    // è utile per trovare una prenotazione in base alle coordinate
+    public static int searchPosition(ArrayList<Integer> l1, ArrayList<Integer> l2, Integer value1, Integer value2) {
+        assert l1.size() == l2.size();
+        int ind1 = -1;
+        for(int i=0; i<l1.size(); i++) {
+            if(l1.get(i) == value1 && l2.get(i) == value2) {
+                ind1 = i;
+            }
+        }
+        return ind1;
+    } 
 }
 
