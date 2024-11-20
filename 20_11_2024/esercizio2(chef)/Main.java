@@ -10,20 +10,9 @@ Alla fine mostro i valori inseriti e la loro somma.
 public class Main {
 
   public static void main(String[] args) {
-    Biblioteca b = new Biblioteca();
-
-    Scanner stringScanner = new Scanner(System.in);
-    Scanner intScanner = new Scanner(System.in);
-
-    InterfacciaBiblioteca biblioInterfaccia = new InterfacciaBiblioteca(b, stringScanner, intScanner);
-    
-    // Loop del menu
-    boolean res1;
-    do {
-      res1 = biblioInterfaccia.eseguiOperazione();
-    } while(res1);
-
-    stringScanner.close();
-    intScanner.close();
+    Chef c = new Chef("Paolo", "veneto", new ArrayList<>(Arrays.asList("Pasta", "Manzo", "Pomodoro")));
+    System.out.println("Chef: " + c.nome + " tipo: " + c.tipo);
+    ArrayList<String> piatto = c.creaPiatto();
+    System.out.println("Ricetta: " + piatto.toString());
  }
 }
