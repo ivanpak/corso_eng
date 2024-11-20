@@ -1,11 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
-Faccio inserire al max 3 valori. Ad ogni valore inserito calcolo la somma. Se è negativa stoppo il ciclo.
-Alla fine mostro i valori inseriti e la loro somma.
- */
 
+// Classe che rappresenta un libro
 public class Libro {
   String nomeAutore;
   int numeroPagine;

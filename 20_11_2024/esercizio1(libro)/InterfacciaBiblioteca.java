@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// Classe che permette di interfacciare l'utente con il contenuto di una biblioteca
 public class InterfacciaBiblioteca {
 
     public Biblioteca b;
@@ -14,6 +15,8 @@ public class InterfacciaBiblioteca {
         this.intScanner = intScanner;
     }
 
+    // mostra un menu e in base all'input dell'utente esegue un'operazione
+    // ritorna sempre true a meno che l'utente non abbia espresso volontà di uscire dal menu
     public boolean eseguiOperazione() {
         System.out.println("\n------------MENU BIBLIOTECA----------------");
         System.out.println("Inserisci stringa: inserisci, visualizza, cerca o chiudi?");
@@ -25,12 +28,10 @@ public class InterfacciaBiblioteca {
                 inserimento();
                 return true;
 
-            // cerca una spedizione
             case "cerca":
                 cerca();
                 return true;
 
-            // visualizza tutte le spedizioni
             case "visualizza":
                 visualizza();
                 return true;
@@ -59,12 +60,12 @@ public class InterfacciaBiblioteca {
         System.out.println("libro inserito");
     }
 
-    // funzione di interfaccia utente per visualizzare le spedizioni
+    // funzione di interfaccia utente per visualizzare il contenuto della biblioteca
     public void visualizza() {
         b.stampa();
     }
 
-    // funzione di interfaccia utente per cercare una spedizione
+    // funzione di interfaccia utente per cercare un libro
     public void cerca() {
 
         // inserimento colore cercato
