@@ -42,13 +42,14 @@ public class Main {
     
     static int currentDayId = 0;
 
+    static final int minShippingQuantity = 100;
+
+    // Liste prenotazioni
+    static ArrayList<ArrayList<Integer>> spedizioni = new ArrayList<>();
+    static ArrayList<Integer> dayIds = new ArrayList<>(); // 1731970800
+    static ArrayList<Boolean> sent = new ArrayList<>();
+
     public static void main(String[] args) {
-
-        // Liste prenotazioni
-        ArrayList<ArrayList<Integer>> spedizioni = new ArrayList<>();
-        ArrayList<Integer> dayIds = new ArrayList<>(); // 1731970800
-
-        generaSpedizioni(spedizioni);
 
         // Inizializzazione scanner
         stringScanner = new Scanner(System.in);
@@ -58,7 +59,7 @@ public class Main {
         // Loop del menu
         loop1: while(true) {
             System.out.println("\n------------MENU----------------");
-            System.out.println("Inserisci stringa: inserisci, visualizza, report, cerca, spedizioni o chiudi?");
+            System.out.println("Inserisci stringa: inserisci, genera, spedisci, visualizza, giorno, report, cerca, spedizioni o chiudi?");
             String selector = stringScanner.nextLine();
             
             // seleziona l'operazione da eseguire
@@ -67,34 +68,36 @@ public class Main {
 
                 // inscerisci spedizione
                 case "inserisci":
-                    Main.inserimentoSpedizione(spedizioni);
+                    Main.inserimentoSpedizione();
                     break;
 
-                case "generaSpedizioni":
-                    Main.generaSpedizioni(spedizioni);
+                case "genera":
+                    Main.generaSpedizioni();
                     break;
 
                 case "spedisci":
+                    Main.spedisci();
                     break;
                 
-                case "nuovo giorno":
+                case "giorno":
+                    Main.nuovoGiorno();
                     break;
 
                 // cerca una spedizione
                 case "cerca":
-                    Main.cercaSpedizione(spedizioni);
+                    Main.cercaSpedizione();
                     break;
 
 
                 // visualizza tutte le spedizioni
                 case "visualizza":
-                    Main.visualizzaSpedizioni(spedizioni);
+                    Main.visualizzaSpedizioni();
                     break;
 
 
                 // mostra la somma delle spedizioni
                 case "report":
-                    Main.sommaSpedizioni(spedizioni);
+                    Main.sommaSpedizioniUser();
                     break;
                 
 
@@ -114,8 +117,11 @@ public class Main {
         Main.intScanner.close();
     }
 
+
+    // INTERFACCIA
+
     // funzione di interfaccia utente per inserire una spedizione
-    public static void inserimentoSpedizione(ArrayList<ArrayList<Integer>> speds) {
+    public static void inserimentoSpedizione() {
 
         // inserimento quantità
         System.out.println("----");
@@ -131,35 +137,47 @@ public class Main {
         // costruzione nuova spedizione
         ArrayList<Integer> newSped = new ArrayList<>(Arrays.asList(rosse, blu, verde, nero));
         // inserimento spedizione
-        speds.add(newSped);
+        Main.spedizioni.add(newSped);
+        Main.dayIds.add(Main.currentDayId);
+        Main.sent.add(false);
+
 
         System.out.println("spedizione inserita");
     }
 
     // funzione di interfaccia utente per visualizzare le spedizioni
-    public static void visualizzaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
+    public static void visualizzaSpedizioni() {
 
         // stampa dell'intestazione della tabella
         for (String s : Main.types) {
             System.out.print(s + "\t");
         }
+        System.out.print("Day" + "\t");
+        System.out.print("Sent" + "\t");
         System.out.print("\n");
         // stampa di ogni spedizione
-        for (ArrayList<Integer> sped : speds) {
-            for (Integer i : sped) {
-                System.out.print(i + "\t");
+        for (int i=0;i<Main.spedizioni.size(); i++) {
+            ArrayList<Integer> sped = Main.spedizioni.get(i);
+            Integer sday = Main.dayIds.get(i);
+            Boolean sent1 = Main.sent.get(i);
+
+            for (Integer j : sped) {
+                System.out.print(j + "\t");
             }
+            System.out.print(sday + "\t");
+
+            System.out.print(sent1 + "\t");
             System.out.print("\n");
         }
     }
 
     // funzione di interfaccia utente per mostrare la somma delle quantità delle spedizioni
-    public static void sommaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
+    public static void sommaSpedizioniUser() {
 
         // somma per ogni colore e totale
         int[] sums = new int[Main.types.length];
         int fullsum = 0;
-        for (ArrayList<Integer> sped : speds) {
+        for (ArrayList<Integer> sped : Main.spedizioni) {
             for (int i=0; i<4; i++) {
                 sums[i] += sped.get(i);
                 fullsum += sped.get(i);
@@ -174,7 +192,7 @@ public class Main {
     }
 
     // funzione di interfaccia utente per cercare una spedizione
-    public static void cercaSpedizione(ArrayList<ArrayList<Integer>> speds) {
+    public static void cercaSpedizione() {
 
         // inserimento colore cercato
         System.out.println("----");
@@ -187,9 +205,9 @@ public class Main {
         }
 
         // ricerca della spedizione con almeno una penna del colore specificato
-        int spedId = cercaPosizione(speds, color);
+        int spedId = cercaPosizione(Main.spedizioni, color);
         if(spedId!=-1) {
-            stampaSpedizione(speds.get(spedId));
+            stampaSpedizione(spedId);
         } else {
             System.out.println("Nessuna spedizione con almeno una penna di colore " + color);
         }
@@ -218,19 +236,56 @@ public class Main {
     }
 
     // questa funzione stampa una singola spedizione, ponendo i nomi dei colori prima di ogni quantità
-    public static void stampaSpedizione(ArrayList<Integer> sped) {
+    public static void stampaSpedizione(int id1) {
+        ArrayList<Integer> sped = Main.spedizioni.get(id1);
         for (int i=0; i<Main.types.length; i++) {
             System.out.print(Main.types[i] + ": " + sped.get(i) + "\t\t");
         }
+        System.out.print("Giorno" + ": " + Main.dayIds.get(id1) + "\t\t");
+        System.out.print("Spedito" + ": " + Main.sent.get(id1) + "\t\t");
         System.out.print("\n");
     }
 
     // genero le spedizioni
-    public static void generaSpedizioni(ArrayList<ArrayList<Integer>> speds) {
-        for(int i =0; i<10; i++) {
+    public static void generaSpedizioni() {
+        for(int i =0; i<3; i++) {
             ArrayList<Integer> sped1 = generaSpedizione();
-            stampaSpedizione(sped1);
-            speds.add(sped1);
+            Main.spedizioni.add(sped1);
+            Main.dayIds.add(Main.currentDayId);
+            Main.sent.add(false);
+            stampaSpedizione(Main.spedizioni.size()-1);
+        }
+    }
+
+    // nuovo giorno
+    public static void nuovoGiorno() {
+        Main.currentDayId +=1;
+    }
+
+    private static void spedisci() {
+        ArrayList<Integer> unsentIds = new ArrayList<>();
+        for (int i=0; i<Main.spedizioni.size(); i++) {
+            if(Main.sent.get(i).equals(false)) {
+                unsentIds.add(i);
+            }
+        }
+
+        ArrayList<Integer> sums = Main.sommaSpedizioni(unsentIds);
+        boolean ok = true;
+        for(int s : sums) {
+            if(s<Main.minShippingQuantity) {
+                ok = false;
+                break;
+            }
+        }
+        if(!ok) {
+            System.out.println("Penne insufficienti per la spedizione");
+            return;
+        } else {
+            for(int id1: unsentIds) {
+                Main.sent.set(id1, true);
+            }
+            System.out.println("Penne spedite");
         }
     }
 
@@ -243,7 +298,7 @@ public class Main {
         while(sum==0) {
             sped.clear();
             for (int i=0; i<Main.types.length; i++) {
-                sped.add(rand.nextInt(100));
+                sped.add(rand.nextInt(30));
             }
             sum = 0;
             for (Integer s: sped) {
@@ -252,6 +307,25 @@ public class Main {
         }
 
         return sped;
+    }
+
+
+    public static ArrayList<Integer> sommaSpedizioni(ArrayList<Integer> ids) {
+        int[] sums = new int[Main.types.length];
+        int fullsum = 0;
+        for (int id1 : ids) {
+            ArrayList<Integer> sped = Main.spedizioni.get(id1);
+            for (int i=0; i<4; i++) {
+                sums[i] += sped.get(i);
+                fullsum += sped.get(i);
+            }
+        }
+        ArrayList<Integer> ret = new ArrayList<>();
+        for (int i=0; i<4; i++) {
+            ret.add(sums[i]);
+        }
+        ret.add(fullsum);
+        return ret;
     }
 
 
