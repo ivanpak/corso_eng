@@ -65,8 +65,6 @@ public class Main {
             // seleziona l'operazione da eseguire
             switch (selector) {
 
-
-                // inscerisci spedizione
                 case "inserisci":
                     Main.inserimentoSpedizione();
                     break;
@@ -87,7 +85,6 @@ public class Main {
                 case "cerca":
                     Main.cercaSpedizione();
                     break;
-
 
                 // visualizza tutte le spedizioni
                 case "visualizza":
@@ -214,10 +211,52 @@ public class Main {
     }
 
 
+    // nuovo giorno
+    public static void nuovoGiorno() {
+        Main.currentDayId +=1;
+    }
+
+    // spedisci se possibile
+    private static void spedisci() {
+        // cerca ordini non spediti
+        ArrayList<Integer> unsentIds = new ArrayList<>();
+        for (int i=0; i<Main.spedizioni.size(); i++) {
+            if(Main.sent.get(i).equals(false)) {
+                unsentIds.add(i);
+            }
+        }
+
+        // somma quantità di spedizioni non spedite
+        ArrayList<Integer> sums = Main.sommaSpedizioni(unsentIds);
+        boolean ok = true;
+        for(int s : sums) {
+            if(s<Main.minShippingQuantity) {
+                ok = false;
+                break;
+            }
+        }
+
+        
+        if(!ok) {
+            // se pennse non sufficienti non spedisco
+            System.out.println("Penne insufficienti per la spedizione");
+            return;
+        } else {
+            // altrimenti spedisco
+            for(int id1: unsentIds) {
+                Main.sent.set(id1, true);
+            }
+            System.out.println("Penne spedite");
+        }
+    }
 
 
 
-    // questa funzione restituisce l'indice della prima spedizione con almeno una penna del colore specificato
+    // UTILITIES
+
+
+
+    // restituisce l'indice della prima spedizione con almeno una penna del colore specificato
     public static int cercaPosizione(ArrayList<ArrayList<Integer>> l1, String color) {
         int ind1 = -1;
         // trovo l'indice corrispondente al colore
@@ -248,44 +287,13 @@ public class Main {
 
     // genero le spedizioni
     public static void generaSpedizioni() {
+        // genera 3 spedizioni
         for(int i =0; i<3; i++) {
             ArrayList<Integer> sped1 = generaSpedizione();
             Main.spedizioni.add(sped1);
             Main.dayIds.add(Main.currentDayId);
             Main.sent.add(false);
             stampaSpedizione(Main.spedizioni.size()-1);
-        }
-    }
-
-    // nuovo giorno
-    public static void nuovoGiorno() {
-        Main.currentDayId +=1;
-    }
-
-    private static void spedisci() {
-        ArrayList<Integer> unsentIds = new ArrayList<>();
-        for (int i=0; i<Main.spedizioni.size(); i++) {
-            if(Main.sent.get(i).equals(false)) {
-                unsentIds.add(i);
-            }
-        }
-
-        ArrayList<Integer> sums = Main.sommaSpedizioni(unsentIds);
-        boolean ok = true;
-        for(int s : sums) {
-            if(s<Main.minShippingQuantity) {
-                ok = false;
-                break;
-            }
-        }
-        if(!ok) {
-            System.out.println("Penne insufficienti per la spedizione");
-            return;
-        } else {
-            for(int id1: unsentIds) {
-                Main.sent.set(id1, true);
-            }
-            System.out.println("Penne spedite");
         }
     }
 
@@ -298,7 +306,7 @@ public class Main {
         while(sum==0) {
             sped.clear();
             for (int i=0; i<Main.types.length; i++) {
-                sped.add(rand.nextInt(30));
+                sped.add(rand.nextInt(50));
             }
             sum = 0;
             for (Integer s: sped) {
@@ -310,6 +318,7 @@ public class Main {
     }
 
 
+    // somma le spedizioni specificate
     public static ArrayList<Integer> sommaSpedizioni(ArrayList<Integer> ids) {
         int[] sums = new int[Main.types.length];
         int fullsum = 0;
