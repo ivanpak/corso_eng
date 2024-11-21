@@ -15,6 +15,7 @@ public class MenuVideoteca {
         stringScanner = new Scanner(System.in);
         intScanner = new Scanner(System.in);
         loop1: while(true) {
+            System.out.println();
             System.out.println("-------MENU------------");
             System.out.println("1 aggiungi utente");
             System.out.println("2 gestisci utente");
@@ -23,6 +24,7 @@ public class MenuVideoteca {
             System.out.println("5 cerca film");
             System.out.println("6 visualizza catalogo");
             System.out.println("7 visualizza utenti");
+            System.out.println("-----------------------");
             String selezione = stringScanner.nextLine();
             switch (selezione) {
                 case "1":
@@ -67,14 +69,25 @@ public class MenuVideoteca {
     private void gestisciUtente() {
         System.out.println("inserisci id");
         int id1 = intScanner.nextInt();
-        System.out.println("rimuovi ? 1");
-        int azioneUtente = intScanner.nextInt();
 
         Utente u1 = v.trovaUtentePerId(id1);
+        if(u1==null) {
+            System.out.println("Nessun utente con questo id");
+            return;
+        }
+        u1.print();
 
+        System.out.println("1 rimuovi, 2 vedi film");
+        int azioneUtente = intScanner.nextInt();
         switch (azioneUtente) {
             case 1:
                 v.rimuoviUtente(u1);
+                break;
+            case 2:
+            System.out.println("Ecco i film");
+                for(Film f : u1.getFilms()) {
+                    f.print();
+                }
                 break;
             default:
                 break;
@@ -86,26 +99,65 @@ public class MenuVideoteca {
         String nome = stringScanner.nextLine();
         System.out.println("inserisci anno");
         int anno = intScanner.nextInt();
-        int id1 = v.nextId();
         v.registraFilm(new Film(nome, anno));
 
     }
 
     private void gestisciFilm() {
         System.out.println("inserisci nome");
-        String nome = intScanner.nextLine();
+        String nome = stringScanner.nextLine();
         System.out.println("inserisci anno");
         int anno = intScanner.nextInt();
         Film f1 = new Film(nome, anno);
-        System.out.println("rimuovi ? 1");
-        int azioneUtente = intScanner.nextInt();
+        loop2: while(true) {
+            f1.print();
+            System.out.println("1 rimuovi, 2 assegna a utente, 3 rientra in libreria, 4 chi lo possiede");
+            int azioneUtente = intScanner.nextInt();
 
-        switch (azioneUtente) {
-            case 1:
-                v.rimuoviFilm(f1);
-                break;
-            default:
-                break;
+            switch (azioneUtente) {
+                case 1:
+                    // rimuovi film
+                    v.rimuoviFilm(f1);
+                    break;
+                case 2:
+                    // assegna a utente
+                    System.out.println("inserisci id utente");
+                    int idUtente = intScanner.nextInt();
+                    Utente u = new Utente(idUtente, null, null);
+                    int idUtenteDb = v.getUtenti().indexOf(u);
+                    if(idUtenteDb==-1) {
+                        System.out.println("utente inesistente");
+                    } else {
+                        Utente u2 = v.proprietarioFilm(f1);
+                        if(u2 == null) {
+                            v.getUtenti().get(idUtenteDb).getFilms().add(f1);
+                        } else {
+                            System.out.println("film posseduto da altro utente");
+                        }
+                    }
+                    break;
+                case 3:
+                    Utente u3 = v.proprietarioFilm(f1);
+                    if(u3==null) {
+                        System.out.println("film gia in videoteca");
+                    } else {
+                        int idF = u3.getFilms().indexOf(f1);
+                        u3.getFilms().remove(idF);
+                        System.out.println("film riportato in videoteca con successo");
+                    }
+                    break;
+                case 4:
+                    Utente u4 = v.proprietarioFilm(f1);
+                    if(u4 == null) {
+                        System.out.println("il film è in videoteca, quindi non posseduto da nessun utente");
+                    } else {
+                        System.out.println("il film è noleggiato da");
+                        u4.print();
+                    }
+                    break;
+                default:
+                    break loop2;
+            }
         }
     }
 
@@ -151,12 +203,13 @@ public class MenuVideoteca {
         }
     }
 
-    private bool filmInVideoteca(Film f) {
+    /*private bool filmInVideoteca(Film f) {
+        
 
     }
 
     private bool filmInPrestito(Film f) {
 
-    }
+    }*/
 
 }

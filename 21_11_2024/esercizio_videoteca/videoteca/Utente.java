@@ -6,10 +6,18 @@ public class Utente {
     private String nome;
     private ArrayList<Film> films;
 
-    // @Overload
-    public boolean equals(Utente u) {
+    @Override
+    public boolean equals(Object obj) {
         System.out.println("my utente equals");
-        return this.id == u.id;
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Utente) {
+            // Circle circle =  (Circle)obj;
+            return this.id == ((Utente)obj).id;
+        } else {
+            return false;
+        }
     }
 
     public void print() {
