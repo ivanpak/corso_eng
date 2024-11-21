@@ -6,8 +6,14 @@ public class Chef extends Utente {
 
     @Override
     public void contribuisci(Ristorante r) {
+        System.out.println("Stai inserendo un nuovo piatto nel catalogo del ristorante");
         System.out.println("Inserisci nome piatto");
         String piatto = Main.stringScanner.nextLine();
-        r.getPiatti().add(piatto);
+        r.aggiungiPiatto(piatto);
+    }
+
+    @Override
+    public String getTipo() {
+        return "Chef";
     }
 }

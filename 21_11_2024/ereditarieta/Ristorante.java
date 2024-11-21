@@ -6,6 +6,7 @@ public class Ristorante {
 
     public void aggiungiPiatto(String piatto) {
         piatti.add(piatto);
+        valutazioni.add(null);
     }
 
     public void assegnaValutazione(String piatto, int val) {

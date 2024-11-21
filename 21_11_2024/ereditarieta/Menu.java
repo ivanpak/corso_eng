@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
@@ -7,11 +8,13 @@ public class Menu {
     Scanner intScanner;
     Ristorante ristorante;
     ArrayList<Utente> utenti;
+    Utente utenteLoggato;
 
     public Menu(Ristorante r) {
         stringScanner = Main.stringScanner;
         intScanner = Main.intScanner;
         this.ristorante = r;
+        this.utenti = new ArrayList<>();
     }
     public Menu(Ristorante r, ArrayList<Utente> u) {
         stringScanner = Main.stringScanner;
@@ -24,6 +27,9 @@ public class Menu {
         loop1: while(true) {
             System.out.println();
             System.out.println("-------MENU------------");
+            if(utenteLoggato != null) {
+                System.out.println(String.format("## Loggato come: %s (%s) ##", utenteLoggato.getNome(), utenteLoggato.getTipo()));
+            }
             System.out.println("1 aggiungi utente");
             System.out.println("2 login utente");
             System.out.println("3 contribuisci");
@@ -61,69 +67,60 @@ public class Menu {
     private void aggiungiUtente() {
         System.out.println("inserisci nome");
         String nome = stringScanner.nextLine();
-        int id1 = v.nextId();
-        v.registraUtente(new Utente(id1, nome, new ArrayList<>()));
-    }
-
-    private void gestisciUtente() {
-        System.out.println("inserisci id");
-        int id1 = intScanner.nextInt();
-
-        Utente u1 = v.trovaUtentePerId(id1);
-        if(u1==null) {
-            System.out.println("Nessun utente con questo id");
+        System.out.println("inserisci password");
+        String password = stringScanner.nextLine();
+        System.out.println("inserisci email");
+        String email = stringScanner.nextLine();
+        System.out.println("inserisci tipo: chef/critico");
+        String tipo = stringScanner.nextLine();
+        Float soldi = (new Random()).nextFloat()*100;
+        Utente u1;
+        if(tipo == "chef") {
+            u1 = new Chef(nome, email, password, soldi);
+        } else if(tipo == "critico") {
+            u1 = new Critico(nome, email, password, soldi);
+        } else {
+            System.out.println("tipo non accettato");
             return;
         }
-        u1.print();
-
-        System.out.println("1 rimuovi, 2 vedi film");
-        int azioneUtente = intScanner.nextInt();
-        switch (azioneUtente) {
-            case 1:
-                v.rimuoviUtente(u1);
-                break;
-            case 2:
-            System.out.println("Ecco i film");
-                for(Film f : u1.getFilms()) {
-                    f.print();
-                }
-                break;
-            default:
-                break;
-        }
+        utenti.add(u1);
     }
 
-    private void aggiungiFilm() {
-        System.out.println("inserisci nome");
-        String nome = stringScanner.nextLine();
-        System.out.println("inserisci anno");
-        int anno = intScanner.nextInt();
-        v.registraFilm(new Film(nome, anno));
+    private void login() {
+        System.out.println("inserisci email");
+        String email = stringScanner.nextLine();
+        System.out.println("inserisci password");
+        String password = stringScanner.nextLine();
+        for(Utente u: utenti) {
+            if(u.credenzialiCorrette(email, password)) {
+                this.utenteLoggato = u;
+            }
+        }
+        System.out.println("login effettuato!");
+    }
 
+    private void contribuisci() {
+        if(this.utenteLoggato == null) {
+            System.out.println("Devi essere loggato");
+        } else {
+            this.utenteLoggato.contribuisci(this.ristorante);
+        }
     }
 
     private void visualizzaCatalogo() {
-        System.out.println("Ecco i film:");
-        for (Utente u : ristorante()) {
-            f.print();
+        System.out.println("Ecco i piatti e le valutazioni:");
+        for (int i =0; i<ristorante.getPiatti().size(); i++) {
+            System.out.println(ristorante.getPiatti().get(i));
+            System.out.println(ristorante.getValutazioni().get(i));
         }
 
     }
 
     private void visualizzaUtenti() {
         System.out.println("Ecco gli utenti:");
-        for (Utente u : v.getUtenti()) {
-            u.print();
+        for (int i =0; i<utenti.size(); i++) {
+            utenti.get(i).print();
         }
     }
-
-    /*private bool filmInVideoteca(Film f) {
-        
-
-    }
-
-    private bool filmInPrestito(Film f) {
-
-    }*/
 
 }

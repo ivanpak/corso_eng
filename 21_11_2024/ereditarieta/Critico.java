@@ -6,6 +6,7 @@ public class Critico extends Utente {
 
     @Override
     public void contribuisci(Ristorante r) {
+        System.out.println("Stai assegnando una valutazione");
         System.out.println("Inserisci nome piatto");
         String piatto = Main.stringScanner.nextLine();
         System.out.println("Inserisci valutazione (1-5)");
@@ -16,5 +17,10 @@ public class Critico extends Utente {
         } else {
             r.assegnaValutazione(piatto, val);
         }
+    }
+
+    @Override
+    public String getTipo() {
+        return "Critico";
     }
 }
