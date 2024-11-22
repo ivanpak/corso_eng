@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+// Questa classe è un'interfaccia per gestire un ristorante. Inoltre contiene e gestisce una lista di utenti del ristorante
 public class Menu {
 
     Scanner stringScanner;

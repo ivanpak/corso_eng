@@ -4,6 +4,7 @@ public class Critico extends Utente {
         super(nome,email,password,soldi);
     }
 
+    // implemento il comportamento dell'utente specificando che il critico assegna una valutazione
     @Override
     public void contribuisci(Ristorante r) {
         System.out.println("Stai assegnando una valutazione");

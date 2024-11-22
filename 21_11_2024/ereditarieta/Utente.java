@@ -1,3 +1,7 @@
+
+
+// questa è una classe astratta che definisce un utente generico di un ristorante.
+// può contribuire a un ristorante ma il tipo di contribuzione che da va implementata nelle sottoclassi
 public abstract class Utente extends Ristorante {
     protected String nome;
     protected String email;

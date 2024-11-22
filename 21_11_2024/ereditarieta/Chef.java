@@ -4,6 +4,7 @@ public class Chef extends Utente {
         super(nome,email,password,soldi);
     }
 
+    // implemento il comportamento dell'utente specificando che lo chef aggiunge un piatto
     @Override
     public void contribuisci(Ristorante r) {
         System.out.println("Stai inserendo un nuovo piatto nel catalogo del ristorante");

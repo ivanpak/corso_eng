@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+
+// Questa classe contiene piatti e valutazioni e permette di aggiungerne
 public class Ristorante {
     private ArrayList<String> piatti;
     private ArrayList<Integer> valutazioni;
