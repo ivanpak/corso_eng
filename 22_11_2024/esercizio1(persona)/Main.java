@@ -24,12 +24,10 @@ class Pirata extends Persona {
         super(name);
     }
 
-    @Override
     void saluta() {
         System.out.println("ciao, sono un pirata: " + name);
     }
 
-    @Override
     void saluta(String saluto) {
         System.out.println(saluto + ", sono un pirata: " + name);
     }
