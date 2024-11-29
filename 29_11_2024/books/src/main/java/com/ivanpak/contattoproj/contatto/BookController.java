@@ -12,9 +12,15 @@ public class BookController{
     private BookServiceI bookService;
 
 
-    @GetMapping("/")
+    @GetMapping("/h1")
     public String listBook(Model model) {
         model.addAttribute("books", bookService.getAllBooks());
         return "home.jsp";
+    }
+
+    @GetMapping("/h2")
+    public String listBook2(Model model) {
+        model.addAttribute("books", bookService.getAllBooks());
+        return "home2.jsp";
     }
 }

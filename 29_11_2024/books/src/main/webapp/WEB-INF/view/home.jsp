@@ -14,7 +14,7 @@ fine libri
         ${books}
         <p><%=nome%></p>
         <c:forEach items="${books}" var="item">
-        $item.nome
+        ${item}
         </c:forEach>
     </body>
 </html>
