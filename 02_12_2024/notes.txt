@@ -1,0 +1,41 @@
+realizzare un servizio REST per la gestione di Task
+ 
+gli attributi del task sono:
+
+id (Long)
+
+title (String)
+
+description (String)
+
+complete (Boolean)
+ 
+Implementare gli endpoints per:
+
+Creare, leggere, aggiornare e cancellare (CRUD) tasks
+
+restituire una lista di tutti i task
+
+restituire una lista di quelli completati 
+
+restituire una lista di quelli non ancora completati
+ 
+le API richieste:
+
+	•	POST /api/v1/tasks: Crea un nuovo task.
+
+	•	GET /api/v1/tasks: Elenco di tutti i task.
+
+	•	GET /api/v1/tasks/{id}: Dettaglio di un task.
+
+	•	PUT /api/v1/tasks/{id}: Aggiorna i dettagli di un task.
+
+	•	DELETE /api/v1/tasks/{id}: Cancella un task.
+
+	•	GET /api/v1/tasks?completed=true/false: Filtra i task in base allo stato.
+ha il menu contestuale
+
+
+Opzionale:
+aggiungi data di inserimento e di aggiornamento
+ 
