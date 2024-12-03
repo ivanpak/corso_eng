@@ -3,9 +3,11 @@ package com.ivanpak.demotask.controller;
 import com.ivanpak.demotask.model.Task;
 import com.ivanpak.demotask.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ public class TaskController {
     private TaskService taskService;
 
 
+
     @GetMapping("")
     public List<Task> getAllTasks(@RequestParam Optional<Boolean> completed) {
         if(completed.isEmpty()) {
@@ -25,6 +28,7 @@ public class TaskController {
             return taskService.getTasksByCompletion(completed.get());
         }
     }
+
 
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable("id") Long id) {
