@@ -18,6 +18,9 @@ public class Book {
 
     private String uuid;
 
-    @Column(name = "name")
-    private String nome;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "author")
+    private String author;
 }

@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    public List<Book> findByNome(String name);
+    public List<Book> findByTitle(String title);
 
     public Optional<Book> findByUuid(String uuid);
+
+    public Long deleteByUuid(String uuid);
 }

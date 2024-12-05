@@ -16,4 +16,6 @@ public interface BookServiceI {
     public BookDTO update(String uuid, BookDTO newBook);
 
     public List<BookDTO> findByNome(String nome);
+
+    public void delete(String uuid);
 }
