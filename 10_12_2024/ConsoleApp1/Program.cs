@@ -44,9 +44,10 @@ class Program {
     public static void Main(string[] args) {
         List<ProdottoSoftware> prodotti = new List<ProdottoSoftware>();
         prodotti.Add(new WebApp("sito1", 10, 5));
-        prodotti.Add(new WebApp("app1", 6, 2));
+        prodotti.Add(new MobileApp("app1", 6, 2));
         prodotti.Add(new WebApp("sito2", 15, 8));
+        // mostra somma dei guagagni da tutti i prodotti
         Console.WriteLine(prodotti.Sum(p => p.calcolaGuadagno()));
-        // Console.WriteLine(prodotti[0].nome);
+        Console.WriteLine(prodotti[0].nome);
     }
 }
