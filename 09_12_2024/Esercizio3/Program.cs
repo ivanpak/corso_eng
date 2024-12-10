@@ -48,7 +48,8 @@ class Program {
         while(true) {
             Console.WriteLine("1 nuovo giocattolo \n 2 mostra giocattoli \n 3 mostra guadagno totale \n 4 esci");
             string s1 = Console.ReadLine();
-            int i1 = int.TryParse(s1);
+            int i1 = 1;
+            int.TryParse(s1, out i1);
             switch(i1) {
                 case 1:
                     Console.WriteLine("inserisci nome");
@@ -56,7 +57,9 @@ class Program {
                     Console.WriteLine("inserisci tipo");
                     string tipo = Console.ReadLine();
                     Console.WriteLine("inserisci prezzoVend");
-                    decimal prezzoProd = decimal.TryParse(Console.ReadLine());
+                    decimal prezzoProd = 0.0M;
+                    s1 = Console.ReadLine();
+                    decimal.TryParse(s1, prezzoProd);
                     Console.WriteLine("inserisci prezzoVend");
                     decimal prezzoVend = decimal.TryParse(Console.ReadLine());
                     Giocattolo g = new Giocattolo(nome, tipo, prezzoProd, prezzoVend);

@@ -1,0 +1,15 @@
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\bin\Debug\net8.0\ConsoleApp1.exe
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\bin\Debug\net8.0\ConsoleApp1.deps.json
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\bin\Debug\net8.0\ConsoleApp1.runtimeconfig.json
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\bin\Debug\net8.0\ConsoleApp1.dll
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\bin\Debug\net8.0\ConsoleApp1.pdb
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.AssemblyInfo.cs
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.sourcelink.json
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.dll
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\refint\ConsoleApp1.dll
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.pdb
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.genruntimeconfig.cache
+C:\Users\ipiacere\Desktop\repos\corso_eng\10_12_2024\ConsoleApp1\obj\Debug\net8.0\ref\ConsoleApp1.dll
